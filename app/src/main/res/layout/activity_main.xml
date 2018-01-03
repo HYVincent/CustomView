@@ -8,20 +8,9 @@
 
 
 
-    <com.example.vincent.customview.ElectrocardiogramBgView
-        android:id="@+id/egb"
+    <com.example.vincent.customview.CustomView
+        android:background="@color/colorAccent"
         android:layout_width="200dp"
         android:layout_height="200dp" />
-
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/egb"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="30dp"
-        android:layout_weight="1"
-        android:text="Button" />
 
 </RelativeLayout>
