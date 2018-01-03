@@ -78,7 +78,7 @@ public class MyData extends View {
         if(datas != null && datas.size()>0){
             mPath.moveTo(0,change(datas.get(0)));
             //1 s更新125个数据，125个数据占用为5个大格(25个小格)
-            //1个小格子为25个数据  1个数据为25分之1小格 1小格的宽度为16
+            //1个小格子为5个数据  1个数据为16/5小格 1小格的宽度为16 1个数据的宽度是16/5
             for (int i = 0;i<datas.size();i++){
                 mPath.lineTo(i * smailGridWith /dataNumber,change(datas.get(i)));
             }
