@@ -26,7 +26,7 @@ public class MyBG extends View {
     //View的高度
     private int view_height;
     //基准线 在View的垂直居中的位置
-    private int baseLine;
+    protected int baseLine;
     //小格子的宽度
     private int smallGrid = 16;
     //大个字的宽度 一个大格子里面包含5个小格子

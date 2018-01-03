@@ -154,7 +154,7 @@ public class Electrocardiogram extends View{
 
 
     public void generateElectrocar(){
-    	
+
         for( int i = 0; i < 12  ; i++){         // 前面 12 个小格
             datas.add(0f);						// 为平滑水平的直线
         }
@@ -168,10 +168,10 @@ public class Electrocardiogram extends View{
             float value = (float) (maxLevel * random);	// 最大值为 maxLevel
             datas.add(value);
         }
-        
+
         // 下面的代码和上面一样
 
-        
+
         for( int i = 0; i < 12  ; i++){         // 前面 12 个小格
             datas.add(0f);
         }

@@ -36,4 +36,12 @@
         android:layout_width="match_parent"
         android:layout_height="241dp"/>
 
+    <com.example.vincent.customview.MyData
+        android:id="@+id/mydata"
+        android:layerType="software"
+        android:layout_width="match_parent"
+        android:layout_height="241dp" />
+
+
+
 </RelativeLayout>
