@@ -52,14 +52,11 @@ public class MainActivity extends AppCompatActivity {
         changeData(ReadAssetsFileUtils.readAssetsTxt(this,"StarCareData"));
 //        myBG.addDatas(datas);
 //        myData.addData(allDatas.get(0));
-        TimeUtils.startTime(0, 100L, new TimeUtils.TimeListener() {
+       TimeUtils.startTime(0, 100L, new TimeUtils.TimeListener() {
             @Override
             public void doAction() {
-                if(index == 0){
-                    startTime = System.currentTimeMillis();
-                }
                 index ++;
-                if(index == 125){
+                if(index == allDatas.size()-1){
                     Log.d(TAG, "doAction: "+String.valueOf(System.currentTimeMillis()-startTime));
                     Log.d(TAG, "doAction: size is "+dataaaaa.size()+"\n"+JSONArray.toJSONString(dataaaaa));
                     Log.d(TAG, "doAction: allData size is "+allDatas.size()+"\n"+JSONArray.toJSONString(allDatas));
@@ -79,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             allDatas.add(Integer.valueOf(strDatas[i].replace("\r","")));
         }
         Log.d(TAG, "changeData: allDatas size is "+String.valueOf(allDatas.size()));
+//        myData.addAllData(allDatas);
     }
 
     @Override
