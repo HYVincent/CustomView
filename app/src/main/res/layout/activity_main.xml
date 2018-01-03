@@ -9,7 +9,7 @@
 
 
 
-    <com.example.vincent.customview.CustomView
+    <com.example.vincent.customview.view.CustomView
         android:visibility="gone"
         android:background="@color/colorAccent"
         android:layout_width="200dp"
@@ -40,12 +40,12 @@
         android:layout_width="match_parent"
         android:layout_height="270dp" />-->
 
-    <com.example.vincent.customview.MyBG
+    <com.example.vincent.customview.view.MyBG
         android:id="@+id/mybg"
         android:layout_width="match_parent"
         android:layout_height="241dp"/>
 
-    <com.example.vincent.customview.MyData
+    <com.example.vincent.customview.view.MyData
         android:id="@+id/mydata"
         android:layerType="software"
         android:layout_width="match_parent"

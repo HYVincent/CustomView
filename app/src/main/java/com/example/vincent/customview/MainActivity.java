@@ -5,14 +5,17 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.alibaba.fastjson.JSONArray;
+import com.example.vincent.customview.utils.CountDown;
+import com.example.vincent.customview.utils.PriorityExecutor;
+import com.example.vincent.customview.utils.ReadAssetsFileUtils;
+import com.example.vincent.customview.utils.TimeUtils;
+import com.example.vincent.customview.view.CustomView;
+import com.example.vincent.customview.view.MyBG;
+import com.example.vincent.customview.view.MyData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private List<Integer> dataaaaa = new ArrayList<>();
 
     private int index = -1;
-    private CountDown countDown;
 
     private Handler handler = new Handler(){
         @Override
@@ -52,20 +54,34 @@ public class MainActivity extends AppCompatActivity {
         changeData(ReadAssetsFileUtils.readAssetsTxt(this,"StarCareData"));
 //        myBG.addDatas(datas);
 //        myData.addData(allDatas.get(0));
-       TimeUtils.startTime(0, 100L, new TimeUtils.TimeListener() {
+        TimeUtils.startTime(0, 1000/125L*2, new TimeUtils.TimeListener() {
             @Override
             public void doAction() {
                 index ++;
-                if(index == allDatas.size()-1){
-                    Log.d(TAG, "doAction: "+String.valueOf(System.currentTimeMillis()-startTime));
-                    Log.d(TAG, "doAction: size is "+dataaaaa.size()+"\n"+JSONArray.toJSONString(dataaaaa));
-                    Log.d(TAG, "doAction: allData size is "+allDatas.size()+"\n"+JSONArray.toJSONString(allDatas));
+                if(index >= allDatas.size()-2){
                     TimeUtils.cancelTime();
                     return;
                 }
-                Message message = Message.obtain();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        myData.addData(allDatas.get(index));
+                        Log.d(TAG, "run: index = " +String.valueOf(index));
+                    }
+                });
+               /* PriorityExecutor priorityExecutor = new PriorityExecutor(true);
+                priorityExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Message message = Message.obtain();
+                        message.what = 0x11;
+                        handler.sendMessage(message);
+                    }
+                });*/
+
+               /* Message message = Message.obtain();
                 message.what = 0x11;
-                handler.sendMessage(message);
+                handler.sendMessage(message);*/
             }
         });
     }

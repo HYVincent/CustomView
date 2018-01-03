@@ -1,21 +1,15 @@
-package com.example.vincent.customview;
+package com.example.vincent.customview.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +26,11 @@ import java.util.List;
 public class MyData extends View {
 
     private static final String TAG = MyData.class.getSimpleName();
-    private Handler mHandler = new Handler(){};
-
     private List<Integer> datas = new ArrayList<>();
     private Paint mPaint;
     private Path mPath;
     private int color = Color.parseColor("#07aef5");
+    //心电图的宽度
     private float line_width = 4f;
     private int view_width;
     private int view_height;
@@ -50,7 +43,6 @@ public class MyData extends View {
 
     //屏幕能够显示的所有的点的个数 注意这个值设置为int会导致这个数值不准确
     private float maxSize = 0;
-
 
     public MyData(Context context) {
         super(context);
@@ -75,7 +67,6 @@ public class MyData extends View {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-
         super.onLayout(changed, left, top, right, bottom);
     }
 
@@ -85,12 +76,10 @@ public class MyData extends View {
         //清除路径
         mPath.reset();
         if(datas != null && datas.size()>0){
-            //TODO 清空画布..
             mPath.moveTo(0,change(datas.get(0)));
             //1 s更新125个数据，125个数据占用为5个大格(25个小格)
             //1个小格子为25个数据  1个数据为25分之1小格 1小格的宽度为16
             for (int i = 0;i<datas.size();i++){
-//                mPath.lineTo(i,change(datas.get(i)));
                 mPath.lineTo(i * smailGridWith /dataNumber,change(datas.get(i)));
             }
             canvas.drawPath(mPath,mPaint);
@@ -103,8 +92,8 @@ public class MyData extends View {
      */
     public void addData(Integer data){
         if(datas.size() > maxSize){
-            //如果这个集合大于125个点，那么就把第一个点移除
-            Log.d(TAG, "addData: "+maxSize);
+            //如果这个集合大于maxSize（即表示屏幕上所能显示的点的个数）个点，那么就把第一个点移除
+//            Log.d(TAG, "addData: "+maxSize);
             datas.remove(0);
         }
         datas.add(data);
