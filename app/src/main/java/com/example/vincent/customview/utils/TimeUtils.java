@@ -1,10 +1,14 @@
 package com.example.vincent.customview.utils;
 
+import android.util.Log;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Vincent QQ:1032006226
@@ -18,71 +22,31 @@ import java.util.concurrent.TimeUnit;
 
 public class TimeUtils {
 
-    private static Timer timer;
-    private static ScheduledExecutorService executor;
-
     /**
-     * 计时 每隔intervalMillisecond毫秒之后执行某个函数
-     * @param delayTimeStart
-     * @param intervalMillisecond
+     * 计时器，定时任务
+     * @param index 初始值，
+     * @param delayTime 延迟时间  延迟多少毫秒开始执行
+     * @param interval 间隔时间，间隔多少时间执行一次
+     * @param threadNum 线程池的数量
+     * @param timeListener 监听器
      */
-    public static void startTime(long delayTimeStart, long intervalMillisecond , final TimeListener timeListener){
-       /* PriorityExecutor priorityExecutor = new PriorityExecutor(true);
-        priorityExecutor.execute(new PriorityRunnable(Priority.HIGH, new Runnable() {
+    public static void startTime(int index,long delayTime,long interval,  int threadNum, final TimeListener timeListener) {
+        final AtomicInteger atomicInteger = new AtomicInteger(index);
+        if (threadNum == 0) {
+            threadNum = 1;
+        }
+        final ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(threadNum);
+        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-
-            }
-        }));*/
-        executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            //如果发生异常，将不会影响定时器
-                            timeListener.doAction();
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                delayTimeStart,
-                intervalMillisecond,
-                TimeUnit.MILLISECONDS);
-    }
-
-
-
-    /**
-     * 计时 每隔intervalMillisecond毫秒之后执行某个函数
-     * @param delayTimeStart
-     * @param intervalMillisecond
-     */
-    public static void startTime2(long delayTimeStart, long intervalMillisecond , final TimeListener timeListener){
-        timer = new Timer();
-        TimerTask task = new TimerTask(){
-            public void run() {
+                atomicInteger.incrementAndGet();
                 timeListener.doAction();
             }
-        };
-        timer.schedule (task, delayTimeStart, intervalMillisecond);//第一个参数表示延时 ，第二个参数表示间隔多少秒之后执行
+        }, delayTime, interval, TimeUnit.MILLISECONDS);
     }
-
-    public static void cancelTime(){
-        if(timer != null){
-            timer.cancel();
-        }
-        if(executor != null && !executor.isShutdown()){
-            executor.shutdown();
-        }
-    }
-
 
     public interface TimeListener{
-
         void doAction();
-
     }
 
 }

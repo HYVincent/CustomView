@@ -55,6 +55,14 @@ public class MyData extends View {
         setBackgroundColor(ContextCompat.getColor(context,android.R.color.transparent));
     }
 
+    /**
+     * 这个方法可以每隔格子放的数据数量
+     * @param dataNumber
+     */
+    public void setDataNumber(int dataNumber) {
+        this.dataNumber = dataNumber;
+    }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         view_width = w;
@@ -70,6 +78,8 @@ public class MyData extends View {
         super.onLayout(changed, left, top, right, bottom);
     }
 
+    private boolean isDrawFinish = false;
+
     @Override
     protected void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
@@ -84,6 +94,7 @@ public class MyData extends View {
             }
             canvas.drawPath(mPath,mPaint);
         }
+        isDrawFinish = true;
     }
 
     /**
@@ -97,6 +108,9 @@ public class MyData extends View {
             datas.remove(0);
         }
         datas.add(data);
+        if(!isDrawFinish){
+            return;
+        }
         //这个方法会重新调用onDraw()方法 这个方法用在主线程
         invalidate();
         //这个方法用在异步线程

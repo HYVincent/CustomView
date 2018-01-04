@@ -16,12 +16,17 @@ import com.example.vincent.customview.view.MyData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = CustomView.class.getSimpleName();
     private MyBG myBG;
     private MyData myData;
+    private MyData myData2;
     private List<Integer> allDatas = new ArrayList<>();
     private List<Integer> dataaaaa = new ArrayList<>();
 
@@ -36,14 +41,13 @@ public class MainActivity extends AppCompatActivity {
                     Integer integer = allDatas.get(index);
                     myData.addData(integer);
                     Log.d(TAG, "everySecondAction-->取数据:index = "+String.valueOf(index)+"，data = "+allDatas.get(index));
-                    dataaaaa.add(integer);
+//                    dataaaaa.add(integer);
                     break;
                 default:break;
             }
         }
     };
 
-    private long startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,39 +55,67 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myBG = findViewById(R.id.mybg);
         myData = findViewById(R.id.mydata);
+        myData2 = findViewById(R.id.mydata2);
+        myData2.setDataNumber(10);
         changeData(ReadAssetsFileUtils.readAssetsTxt(this,"StarCareData"));
-//        myBG.addDatas(datas);
-//        myData.addData(allDatas.get(0));
-        TimeUtils.startTime(0, 1000/125L*2, new TimeUtils.TimeListener() {
-            @Override
-            public void doAction() {
-                index ++;
-                if(index >= allDatas.size()-2){
-                    TimeUtils.cancelTime();
-                    return;
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        myData.addData(allDatas.get(index));
-                        Log.d(TAG, "run: index = " +String.valueOf(index));
-                    }
-                });
-               /* PriorityExecutor priorityExecutor = new PriorityExecutor(true);
-                priorityExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Message message = Message.obtain();
-                        message.what = 0x11;
-                        handler.sendMessage(message);
-                    }
-                });*/
+        times();
 
-               /* Message message = Message.obtain();
-                message.what = 0x11;
-                handler.sendMessage(message);*/
+    }
+
+
+
+
+    private void times(){
+        final int index = -1;
+        final AtomicInteger atomicInteger = new AtomicInteger(index);
+
+        final ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(10);
+        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final int mark = atomicInteger.incrementAndGet();
+                    if(mark >= allDatas.size()){
+                        scheduledExecutorService.shutdownNow();
+                        return;
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            myData.addData(allDatas.get(mark));
+                            myData2.addData(allDatas.get(mark));
+                            Log.d(TAG, "run: index = " + String.valueOf(mark));
+                        }
+
+                    });
+//                    Thread.sleep(300);
+                }catch (Exception e){
+
+                }
+
             }
-        });
+        },100,1000/125L,TimeUnit.MILLISECONDS);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 保证index++的连续性 不会跳数
+     * @return
+     */
+    public int getIndex() {
+        synchronized (Integer.class){
+            return index++;
+        }
     }
 
     private void changeData(String starCareData) {

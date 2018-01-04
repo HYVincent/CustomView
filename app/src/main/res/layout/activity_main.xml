@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.vincent.customview.MainActivity">
@@ -40,18 +41,43 @@
         android:layout_width="match_parent"
         android:layout_height="270dp" />-->
 
-    <com.example.vincent.customview.view.MyBG
-        android:id="@+id/mybg"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="241dp"/>
+        android:layout_height="241dp">
 
-    <com.example.vincent.customview.view.MyData
-        android:id="@+id/mydata"
-        android:layerType="software"
+        <com.example.vincent.customview.view.MyBG
+            android:id="@+id/mybg"
+            android:layout_width="match_parent"
+            android:layout_height="241dp"/>
+
+        <com.example.vincent.customview.view.MyData
+            android:id="@+id/mydata"
+            android:layerType="software"
+            android:layout_width="match_parent"
+            android:layout_height="241dp" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="241dp" />
+        android:layout_height="60dp">
+
+
+        <com.example.vincent.customview.view.MyData
+            android:id="@+id/mydata2"
+            android:layerType="software"
+            android:layout_width="match_parent"
+            android:layout_height="41dp" />
 
 
 
->>>>>>> 240865dbd41542c3f7effa8b4f770297babe059e
-</RelativeLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
