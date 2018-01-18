@@ -1,12 +1,15 @@
 package com.example.vincent.customview.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.example.vincent.customview.R;
 
 /**
  * Created by Vincent on 2018/1/2.
@@ -36,21 +39,29 @@ public class MyBG extends View {
 
     public MyBG(Context context) {
         super(context);
-        init();
         setBackgroundColor(BGColor);
 
     }
 
     public MyBG(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
         setBackgroundColor(BGColor);
+        init(context, attrs);
+    }
+
+    public MyBG(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        setBackgroundColor(BGColor);
+        init(context, attrs);
     }
 
     /**
      * 初始化
      */
-    private void init() {
+    private void init(Context context, AttributeSet attrs) {
+        //获取自定义属性的值
+        TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.ECG);
+        smallGrid = (int)a.getDimension(R.styleable.ECG_small_grid_width,16);
         mPaint = new Paint();
         mPaint.setStrokeWidth(2);
         mPaint.setAntiAlias(true);

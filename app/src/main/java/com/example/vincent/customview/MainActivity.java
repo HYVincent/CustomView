@@ -1,10 +1,13 @@
 package com.example.vincent.customview;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.vincent.customview.utils.CountDown;
 import com.example.vincent.customview.utils.PriorityExecutor;
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private boolean isChangeColor = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +61,47 @@ public class MainActivity extends AppCompatActivity {
         myData = findViewById(R.id.mydata);
         myData2 = findViewById(R.id.mydata2);
         myData2.setDataNumber(10);
+        myData2.setDrawHead(false);
         changeData(ReadAssetsFileUtils.readAssetsTxt(this,"StarCareData"));
         times();
-
+        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isChangeColor){
+                    isChangeColor = false;
+                    myData.setmColorData(R.color.color_red_ff3030);
+                }else {
+                    isChangeColor = true;
+                    myData.setmColorData(Color.parseColor("#07aef5"));
+                }
+            }
+        });
+        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myData.setMarkOrder();
+            }
+        });
+        findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(pause){
+                    pause = false;
+                }else {
+                    pause = true;
+                }
+                myData.onPauseDraw(pause);
+            }
+        });
+        findViewById(R.id.button5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,MyAllDateActivity.class));
+            }
+        });
     }
 
-
+    private  boolean pause = false;
 
 
     private void times(){
