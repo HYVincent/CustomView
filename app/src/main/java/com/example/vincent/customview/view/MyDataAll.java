@@ -43,12 +43,7 @@ public class MyDataAll extends View {
     private int mColorHead = Color.parseColor("#07aef5");
     //头部的宽度
     private float headPathWidth = 8f;
-
-
-
-
-
-
+    
     public MyDataAll(Context context) {
         super(context);
         init();
@@ -120,17 +115,6 @@ public class MyDataAll extends View {
 //        Log.d(TAG, "change: datas size is "+datas.size());
 //        Log.d(TAG, "change-->取到的数据: "+String.valueOf(data)+"    集合大小: "+String.valueOf(datas.size()));
         return (float) (-1.0f) * data / 20;
-    }
-
-    /**
-     * 设置头部数据颜色值
-     * @param mColorData
-     */
-    public void setmColorData(int mColorData) {
-        this.mColorData = mColorData;
-        if(mPaint != null){
-            mPaint.setColor(mColorData);
-        }
     }
 
     private void init() {
