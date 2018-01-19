@@ -35,24 +35,22 @@ public class MyDataAll extends View {
     private int view_width;
     private int view_height;
 
-    //绘制头部画笔
-    private Paint mHeadPaint;
-    //头部路径
-    private Path mHeadPath;
-    //头部的颜色
-    private int mColorHead = Color.parseColor("#07aef5");
     //头部的宽度
     private float headPathWidth = 8f;
+
+    //每个数据的宽度
+    private float item_width;
+    
 
     public MyDataAll(Context context) {
         super(context);
         init();
-        setBackgroundColor(ContextCompat.getColor(context,android.R.color.transparent));
+        setBackgroundColor(ContextCompat.getColor(context,android.R.color.darker_gray));
     }
     public MyDataAll(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
-        setBackgroundColor(ContextCompat.getColor(context,android.R.color.transparent));
+        setBackgroundColor(ContextCompat.getColor(context,android.R.color.darker_gray));
     }
 
 
@@ -62,7 +60,8 @@ public class MyDataAll extends View {
         view_width = w;
         //控件高度
         view_height = h;
-
+        //每个数据的宽度
+        item_width = (1.0f) * view_width/datas.size();
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
@@ -89,7 +88,7 @@ public class MyDataAll extends View {
                 //1 s更新125个数据，125个数据占用为5个大格(25个小格)
                 //1个小格子为5个数据  1个数据为16/5小格 1小格的宽度为16 1个数据的宽度是16/5
                 for (int i = 0;i<datas.size();i++){
-                    mPath.lineTo(i,change(datas.get(i)));
+                    mPath.lineTo(i * item_width,change(datas.get(i)));
                 }
                 canvas.drawPath(mPath,mPaint);
                 Log.d(TAG, "drawData: has head");
@@ -114,7 +113,7 @@ public class MyDataAll extends View {
     private float change(Integer data){
 //        Log.d(TAG, "change: datas size is "+datas.size());
 //        Log.d(TAG, "change-->取到的数据: "+String.valueOf(data)+"    集合大小: "+String.valueOf(datas.size()));
-        return (float) (-1.0f) * data / 20;
+        return (float) (-1.0f) * data / 20 * 16 + view_height/2;
     }
 
     private void init() {
@@ -124,14 +123,7 @@ public class MyDataAll extends View {
         mPaint.setColor(mColorData);
         mPaint.setStrokeWidth(line_width);
 
-        mPath = new Path();
-        mHeadPath = new Path();
-
-        mHeadPaint = new Paint();
-        mHeadPaint.setStyle(Paint.Style.STROKE);
-        mHeadPaint.setAntiAlias(true);
-        mHeadPaint.setColor(mColorHead);
-        mHeadPaint.setStrokeWidth(headPathWidth);
+        mPath = new Path();;
     }
 
 }

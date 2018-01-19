@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         myData2.setDataNumber(10);
         myData2.setDrawHead(false);
         changeData(ReadAssetsFileUtils.readAssetsTxt(this,"StarCareData"));
-        times();
+//        times();
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

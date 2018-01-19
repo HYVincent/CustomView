@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CustomView.iml" filepath="$PROJECT_DIR$/CustomView.iml" />
-      <module fileurl="file://D:\MyWork\Common Libaray\CustomView\CustomView.iml" filepath="D:\MyWork\Common Libaray\CustomView\CustomView.iml" />
       <module fileurl="file://D:\CommonDemo\CustomView\.idea\CustomView.iml" filepath="D:\CommonDemo\CustomView\.idea\CustomView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
