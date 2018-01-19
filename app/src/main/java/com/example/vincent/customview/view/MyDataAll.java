@@ -43,7 +43,7 @@ public class MyDataAll extends View {
     private int mColorHead = Color.parseColor("#07aef5");
     //头部的宽度
     private float headPathWidth = 8f;
-    
+
     public MyDataAll(Context context) {
         super(context);
         init();
