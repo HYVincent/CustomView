@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
-<<<<<<< HEAD
  * Created by Administrator on 2017/12/31.
  */
 

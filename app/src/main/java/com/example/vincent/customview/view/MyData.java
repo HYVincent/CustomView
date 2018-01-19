@@ -150,9 +150,9 @@ public class MyData extends View {
                     mPath.lineTo(i * smailGridWith /dataNumber+headWidth,change(datas.get(i)));
                 }
                 canvas.drawPath(mPath,mPaint);
-                Log.d(TAG, "drawData: has head");
+//                Log.d(TAG, "drawData: has head");
             }else {
-                Log.d(TAG, "drawData: no head");
+//                Log.d(TAG, "drawData: no head");
                 //不绘制头部
                 mPath.moveTo(0,change(datas.get(0)));
                 //1 s更新125个数据，125个数据占用为5个大格(25个小格)
@@ -209,6 +209,16 @@ public class MyData extends View {
 //        requestLayout();
     }
 
+    /**
+     * 添加所有数据
+     * @param datas
+     */
+    public void addDatas(List<Integer> datas){
+        if(datas != null && datas.size()>0){
+            this.datas = datas;
+            invalidate();
+        }
+    }
 
     /**
      * 是否暂停绘制
