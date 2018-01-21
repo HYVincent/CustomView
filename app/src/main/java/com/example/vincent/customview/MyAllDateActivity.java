@@ -32,12 +32,11 @@ public class MyAllDateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_date_all);
         changeData(ReadAssetsFileUtils.readAssetsTxt(this,"StarCareData"));
         dataAll = findViewById(R.id.myDataAll);
-        dataShow = findViewById(R.id.mydata_show);
         dataAll.addAllData(allDatas);
         dataAll.setListener(new MyDataAll.MoveDataListener() {
             @Override
             public void showDatas(List<Integer> datas) {
-                dataShow.addAllData(datas);
+//                dataShow.addAllData(datas);
             }
         });
     }
